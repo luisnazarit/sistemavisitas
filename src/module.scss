@@ -1,0 +1,77 @@
+body {
+    background: #e9f1f4;
+    padding-bottom: 8rem;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h3,h4 {
+    font-weight: 300;
+}
+
+.top {
+    background: #192329;
+    padding: .3rem;
+}
+
+#main-header {
+    background: url("http://imgclasificados1.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_3901_Imagen%20005.png");
+    background-size: cover;
+    display: flex;
+    height: 300px;
+    color: #FFF;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background: rgba(0,0,0,.4);
+    }
+    > div {
+        position: relative;
+        z-index: 1;
+    }
+    h1 {
+        font-weight: 300;
+        font-size: 4rem;
+        letter-spacing: -2px;
+    }
+    h2 {
+        opacity: .5;
+    }
+}
+
+.box-add-visit {
+    background: #FFF;
+    margin-top: -100px;
+    position: relative;
+    z-index: 8;
+}
+
+.info-visitas {
+    .container {
+        background: #FFF;
+    }
+}
+
+.add-apartment {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    background: rgba(0,0,0,.7);
+    .app-apartment-inner {
+        background: #FFF;
+        width: 60%;
+    }
+}
