@@ -7,20 +7,20 @@
                     <label for="apartmentNumber">Depto:</label>
                     <select id="apartmentNumber" class="form-control" v-model="depto">
                         <option disabled :selected="true">Seleccione Depto</option>
-                        <option v-for="apartment in datadeptos" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
+                        <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label>Nombre:</label>
-                    <input :disabled="!depto" class="form-control" type="text" v-model="nombrevisita" placeholder="Nombre">
+                    <input :disabled="!depto" class="form-control" type="text" v-model="name" placeholder="Nombre">
                 </div>
                 <div class="col-md-4">
                     <label>Rut:</label>
-                    <input v-rut :disabled="!depto" class="form-control" type="text" v-model="rutvisita" placeholder="Rut">
+                    <input v-rut :disabled="!depto" class="form-control" type="text" v-model="rut" placeholder="Rut">
                 </div>
 
                 <div class="col-md-2 d-flex align-items-end">
-                    <button :disabled="!depto" class="btn btn-primary" @click="upvisita">Agregar</button>
+                    <button :disabled="!depto" class="btn btn-primary" @click="addVisit">Agregar</button>
                 </div>
 
             </div>
@@ -45,15 +45,12 @@
                     </div>
                     <div class="col-md-8 p-4">
                         <h4>Visitas en depto {{ depto.number }}</h4>
-                        <ul v-if="depto.visits">
-                            <li v-for="visita in depto.visits" :key="visita['.key']">
-                                <p class="mb-0">{{ visita.nombre }}, {{ visita.rut}}</p>
-                                <small class="text-muted">{{ visita.date }}</small>
+                        <ul>
+                            <li v-for="visit in visits" :key="visit['.key']">
+                                <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
+                                <small class="text-muted">{{ visit.date }}</small>
                             </li>
                         </ul>
-                        <div v-else>
-                            Este depto aún no tiene visitas
-                        </div>
                     </div>
                 </div>
             </div>
@@ -64,29 +61,70 @@
 
 <script>
 import autorized from "../components/autorized";
+import { db } from "../components/configFirebase";
+
+let apartmentsRef = db.ref("apartments");
+let visitsRef = db.ref("visits");
 
 export default {
   name: "visitas",
   components: {
     autorized: autorized
   },
-  props: {
-    datadeptos: Array
+  firebase: {
+    apartments: apartmentsRef,
+    visits: visitsRef
   },
   data() {
     return {
       depto: "Seleccione Depto",
-      nombrevisita: "",
-      rutvisita: ""
+      name: "",
+      rut: ""
     };
   },
   methods: {
-    upvisita: function() {
-      this.$emit("datosvisita", {
-        nombre: this.nombrevisita,
-        rut: this.rutvisita,
-        depto: this.depto,
-        date: new Date()
+    formatDate: function(date) {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+      const time = date.getTime();
+
+      return (
+        day +
+        " " +
+        monthNames[monthIndex] +
+        " " +
+        year +
+        " " +
+        hour +
+        ":" +
+        minutes
+      );
+    },
+    addVisit: function() {
+      const newdate = this.formatDate(new Date());
+      visitsRef.push({
+        apartment: this.depto.number,
+        name: this.name,
+        rut: this.rut,
+        date: newdate
       });
     }
   }

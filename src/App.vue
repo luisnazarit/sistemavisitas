@@ -63,37 +63,22 @@
       </div>
     </div>
 
-    <visitas @datosvisita="agregarVisita($event)" :datadeptos="apartments" />
+    <visitas />
 
   </div>
 </template>
 
 <script>
-import Firebase from "firebase";
+import { db } from "./components/configFirebase";
 import visitas from "./components/visitas";
-
-let config = {
-  apiKey: "AIzaSyCKNQtsKdvZwhERm1tvsEk_3AxrkEjSiLk",
-  authDomain: "forward-scion-158612.firebaseapp.com",
-  databaseURL: "https://forward-scion-158612.firebaseio.com",
-  projectId: "forward-scion-158612",
-  storageBucket: "forward-scion-158612.appspot.com",
-  messagingSenderId: "688448162982"
-};
-
-let app = Firebase.initializeApp(config);
-let db = app.database();
-
 let usersRef = db.ref("users");
 let apartmentsRef = db.ref("apartments");
-let visitsRef = db.ref("visits");
 
 export default {
   name: "app",
   firebase: {
     users: usersRef,
-    apartments: apartmentsRef,
-    visits: visitsRef
+    apartments: apartmentsRef
   },
   components: {
     visitas: visitas
@@ -142,53 +127,6 @@ export default {
         (this.newApartment.phone = ""),
         (this.newApartment.password = ""),
         (this.addApartmentPanel = false);
-    },
-    formatDate: function(date) {
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-
-      const day = date.getDate();
-      const monthIndex = date.getMonth();
-      const year = date.getFullYear();
-      const hour = date.getHours();
-      const minutes = date.getMinutes();
-      const time = date.getTime();
-
-      return (
-        day +
-        " " +
-        monthNames[monthIndex] +
-        " " +
-        year +
-        " " +
-        hour +
-        ":" +
-        minutes
-      );
-    },
-    agregarVisita: function(datos) {
-      console.log(datos);
-      const newdate = this.formatDate(datos.date);
-      apartmentsRef
-        .child(datos.depto[".key"])
-        .child("visits")
-        .push({
-          nombre: datos.nombre,
-          rut: datos.rut,
-          date: newdate
-        });
     }
   },
   watch: {}
