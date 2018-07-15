@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box-add-visit container mb-1 p-5 shadow">
-            <h3 class="mb-4">Agregar visita a depto</h3>
+            <h3 class="mb-4">Ingresar visita a depto</h3>
             <div class="row">
                 <div class="col-md-2">
                     <label for="apartmentNumber">Depto:</label>
@@ -45,8 +45,9 @@
                     </div>
                     <div class="col-md-8 p-4">
                         <h4>Visitas en depto {{ depto.number }}</h4>
+
                         <ul>
-                            <li v-for="visit in visits" :key="visit['.key']">
+                            <li v-for="visit in visitFiltered" :key="visit['.key']">
                                 <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
                                 <small class="text-muted">{{ visit.date }}</small>
                             </li>
@@ -81,6 +82,17 @@ export default {
       name: "",
       rut: ""
     };
+  },
+  computed: {
+    visitFiltered: function() {
+      var a = [];
+      this.visits.forEach(child => {
+        if (child.apartment === this.depto.number) {
+          a.push(child);
+        }
+      });
+      return a;
+    }
   },
   methods: {
     formatDate: function(date) {
@@ -131,3 +143,19 @@ export default {
 };
 </script>
 
+
+<style lang="scss" scoped>
+.box-add-visit {
+  background: #fff;
+  position: relative;
+  z-index: 8;
+}
+
+.info-visitas {
+  .container {
+    background: #fff;
+    position: relative;
+    z-index: 9;
+  }
+}
+</style>

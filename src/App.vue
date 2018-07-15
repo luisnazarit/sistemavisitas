@@ -63,6 +63,16 @@
       </div>
     </div>
 
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#" @click="panelAddVisit = true" class="nav-link" :class="panelAddVisit ? 'active':''">Ingresar visitas</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" @click="panelAddVisit = false" class="nav-link" :class="panelAddVisit ? '':'active'">Historial</a>
+        </li>
+      </ul>
+    </div>
     <visitas />
 
   </div>
@@ -85,6 +95,7 @@ export default {
   },
   data() {
     return {
+      panelAddVisit: true,
       addApartmentPanel: false,
       newApartment: {
         number: "",
