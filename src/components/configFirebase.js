@@ -8,5 +8,5 @@ const appFirebase = Firebase.initializeApp({
   storageBucket: "forward-scion-158612.appspot.com",
   messagingSenderId: "688448162982"
 });
-
 export const db = appFirebase.database();
+export let auth = appFirebase.auth();

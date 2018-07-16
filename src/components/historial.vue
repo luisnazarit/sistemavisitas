@@ -1,0 +1,113 @@
+<template>
+    <div class="history">
+        <div class="container p-4 shadow">
+
+            <div class="filter-bar mb-2 border-bottom pb-4">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h3>Últimas visitas: {{ status }}</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="apartmentNumber" class="form-control" v-model="depto">
+                            <option :selected="true">Todas</option>
+                            <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
+                <div class="mr-3">
+                    <h3>{{ visit.apartment }}</h3>
+                </div>
+                <div class="media-body">
+                    <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
+                    <small class="text-muted">{{ visit.date }}</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<script>
+import { db } from "../components/configFirebase";
+
+let apartmentsRef = db.ref("apartments");
+let visitsRef = db.ref("visits");
+
+export default {
+  name: "historial",
+  firebase: {
+    apartments: apartmentsRef.orderByChild("number"),
+    visits: visitsRef
+  },
+  data() {
+    return {
+      depto: "Todas",
+      status: "Todas"
+    };
+  },
+  computed: {
+    visitsFiltered: function() {
+      var a = [];
+      if (this.depto === "Todas") {
+        return this.visits;
+      } else {
+        this.visits.forEach(child => {
+          if (child.apartment === this.depto.number) {
+            a.push(child);
+          }
+        });
+        return a;
+      }
+    }
+  },
+  methods: {
+    formatDate: function(date) {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+      const time = date.getTime();
+
+      return (
+        day +
+        " " +
+        monthNames[monthIndex] +
+        " " +
+        year +
+        " " +
+        hour +
+        ":" +
+        minutes
+      );
+    }
+  }
+};
+</script>
+
+
+<style lang="scss" scoped>
+.history {
+  .container {
+    background: #fff;
+  }
+}
+</style>

@@ -16,11 +16,12 @@
                 </div>
                 <div class="col-md-4">
                     <label>Rut:</label>
-                    <input v-rut :disabled="!depto" class="form-control" type="text" v-model="rut" placeholder="Rut">
+                    <input v-rut @keyup="validaterut" :disabled="!depto" :class="classRut ? '' : 'error'" class="form-control" type="text" v-model="rut" placeholder="Rut">
+                    <small class="text-danger error-form" v-if="classRut === false">Rut inválido</small>
                 </div>
 
                 <div class="col-md-2 d-flex align-items-end">
-                    <button :disabled="!depto" class="btn btn-primary" @click="addVisit">Agregar</button>
+                    <button :disabled="validateForm" class="btn btn-primary" @click="addVisit">Agregar</button>
                 </div>
 
             </div>
@@ -44,14 +45,22 @@
 
                     </div>
                     <div class="col-md-8 p-4">
-                        <h4>Visitas en depto {{ depto.number }}</h4>
+                        <h4 class="mb-3">Visitas en depto {{ depto.number }}</h4>
+                        <div v-if="visitFiltered.length === 0">
+                            Este departamento no registra visitas
+                        </div>
+                        <div v-else>
+                            <div class="well-light mb-1" v-for="visit in visitFiltered" :key="visit['.key']">
+                                <div class="mb-0 d-flex">
+                                    <p class="mb-0 mr-3">
+                                        <strong>{{ visit.name }} </strong>
+                                    </p>
+                                    <span> {{ visit.rut | rut }}</span>
+                                    <span class="text-muted ml-auto">{{ visit.date }}</span>
+                                </div>
+                            </div>
+                        </div>
 
-                        <ul>
-                            <li v-for="visit in visitFiltered" :key="visit['.key']">
-                                <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
-                                <small class="text-muted">{{ visit.date }}</small>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -62,7 +71,8 @@
 
 <script>
 import autorized from "../components/autorized";
-import { db } from "../components/configFirebase";
+import { db, auth } from "../components/configFirebase";
+import _ from "lodash";
 
 let apartmentsRef = db.ref("apartments");
 let visitsRef = db.ref("visits");
@@ -73,14 +83,15 @@ export default {
     autorized: autorized
   },
   firebase: {
-    apartments: apartmentsRef,
+    apartments: apartmentsRef.orderByChild("number"),
     visits: visitsRef
   },
   data() {
     return {
-      depto: "Seleccione Depto",
+      depto: "",
       name: "",
-      rut: ""
+      rut: "",
+      classRut: true
     };
   },
   computed: {
@@ -92,6 +103,13 @@ export default {
         }
       });
       return a;
+    },
+    validateForm: function() {
+      if (this.name !== "" && this.rut !== null) {
+        return false;
+      } else {
+        return true;
+      }
     }
   },
   methods: {
@@ -138,7 +156,17 @@ export default {
         rut: this.rut,
         date: newdate
       });
-    }
+    },
+    validaterut: _.debounce(function() {
+      if (this.rut === null) {
+        this.classRut = false;
+      } else {
+        this.classRut = true;
+      }
+    }, 1500)
+  },
+  mounted() {
+    //console.log(this.apartments);
   }
 };
 </script>
@@ -157,5 +185,9 @@ export default {
     position: relative;
     z-index: 9;
   }
+}
+.error-form {
+  position: absolute;
+  bottom: -23px;
 }
 </style>
