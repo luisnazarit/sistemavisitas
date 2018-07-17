@@ -6,14 +6,22 @@
 
         <div class="filter-bar mb-4 border-bottom pb-3">
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6">
               <h3 class="h4">Últimas visitas: {{ status }}</h3>
             </div>
-            <div class="col-md-3">
-              <select id="apartmentNumber" class="form-control" v-model="depto">
-                <option :selected="true">Todas</option>
-                <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
-              </select>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <select id="apartmentNumber" class="form-control" v-model="depto">
+                    <option :selected="true">Todas</option>
+                    <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" v-model="search" placeholder="Buscar Persona">
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -46,21 +54,26 @@ export default {
   },
   data() {
     return {
-      depto: "Todas"
+      depto: "Todas",
+      search: ""
     };
   },
   computed: {
     visitsFiltered: function() {
-      var a = [];
+      let a = [];
       if (this.depto === "Todas") {
-        return this.visits;
+        return this.visits.filter(visit => {
+          return visit.name.match(this.search);
+        });
       } else {
         this.visits.forEach(child => {
           if (child.apartment === this.depto.number) {
             a.push(child);
           }
         });
-        return a;
+        return a.filter(visit => {
+          return visit.name.match(this.search);
+        });
       }
     },
     status: function() {
