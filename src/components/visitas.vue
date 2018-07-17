@@ -32,45 +32,48 @@
 
       </div>
     </div>
+    <transition name="fade">
+      <div class="info-visitas" v-if="depto.number">
+        <div class="container shadow">
+          <div class="row p-0">
+            <div class="col-md-4 p-4 border-right">
+              <h3 class="h4">Información del depto</h3>
+              <hr />
+              <h5>{{ depto.number }}</h5>
+              <p class="mb-0">
+                <strong>Dueño:</strong> {{ depto.name }}</p>
+              <p class="mb-0">
+                <strong>Teléfono:</strong> {{ depto.phone }}</p>
+              <p class="mb-0">
+                <strong>Estacionamiento:</strong> {{ depto.parking }}</p>
 
-    <div class="info-visitas">
-      <div class="container shadow">
-        <div class="row p-0" v-if="depto.number">
-          <div class="col-md-4 p-4 border-right">
-            <h3 class="h4">Información del depto</h3>
-            <hr />
-            <h5>{{ depto.number }}</h5>
-            <p class="mb-0">
-              <strong>Dueño:</strong> {{ depto.name }}</p>
-            <p class="mb-0">
-              <strong>Teléfono:</strong> {{ depto.phone }}</p>
-            <p class="mb-0">
-              <strong>Estacionamiento:</strong> {{ depto.parking }}</p>
+              <autorized :info="depto.autorized" />
 
-            <autorized :info="depto.autorized" />
-
-          </div>
-          <div class="col-md-8 p-5">
-            <h4 class="mb-3">Visitas en depto {{ depto.number }}</h4>
-            <div v-if="visitFiltered.length === 0">
-              Este departamento no registra visitas
             </div>
-            <div v-else>
-              <div class="well-light mb-1" v-for="visit in visitFiltered" :key="visit['.key']">
-                <div class="mb-0 d-flex">
-                  <p class="mb-0 mr-3">
-                    <strong>{{ visit.name }} </strong>
-                  </p>
-                  <span> {{ visit.rut | rut }}</span>
-                  <span class="text-muted ml-auto">{{ visit.date }}</span>
-                </div>
+            <div class="col-md-8 p-5">
+              <h4 class="mb-3">Visitas en depto {{ depto.number }}</h4>
+              <div v-if="visitFiltered.length === 0">
+                Este departamento no registra visitas
               </div>
-            </div>
+              <div v-else>
+                <transition-group name="fade">
+                  <div class="well-light mb-1" v-for="visit in visitFiltered" :key="visit['.key']">
+                    <div class="mb-0 d-flex">
+                      <p class="mb-0 mr-3">
+                        <strong>{{ visit.name }} </strong>
+                      </p>
+                      <span> {{ visit.rut | rut }}</span>
+                      <span class="text-muted ml-auto">{{ visit.date }}</span>
+                    </div>
+                  </div>
+                </transition-group>
+              </div>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
 
   </div>
 </template>
