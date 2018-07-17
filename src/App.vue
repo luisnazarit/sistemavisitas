@@ -185,14 +185,22 @@ export default {
 
 .nav-tabs {
   border: 0;
-}
-.nav-tabs .nav-link {
-  border: 0;
-  color: #fff;
-  border-radius: 0;
-}
-
-.nav-tabs .nav-link.active {
-  color: #192329;
+  background: #fff;
+  margin: 0;
+  .nav-item {
+    margin: 0;
+  }
+  .nav-link {
+    border: 0;
+    padding: 1rem 2rem;
+    color: #999;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    &.active {
+      border-color: #3982e4;
+      color: #3982e4;
+      font-weight: bold;
+    }
+  }
 }
 </style>

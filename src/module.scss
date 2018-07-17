@@ -2,6 +2,8 @@ body {
     background: #e9f1f4;
     padding-bottom: 8rem;
     font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizelegibility;
 }
@@ -35,8 +37,8 @@ h3,h4 {
     }
     h1 {
         font-weight: 300;
-        font-size: 4rem;
-        letter-spacing: -2px;
+        font-size: 3rem;
+        letter-spacing: -3px;
     }
     h2 {
         opacity: .5;
@@ -44,7 +46,7 @@ h3,h4 {
 }
 
 #app {
-    margin-top: -100px;
+    margin-top: -80px;
     position: relative;
 }
 
@@ -52,8 +54,42 @@ h3,h4 {
     border-color: red
 }
 
+.overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
 .well-light {
     padding: .5rem;
     background: #eef3f9;
     border-radius: .25rem;
+}
+.overlay {
+    .card {
+        border: 0;
+        height: 90vh;
+        .card-header {
+            color: #FFF;
+            border: 0;
+            background: #3982e4;
+        }
+        .card-body {
+            overflow: auto;
+        }
+    }
+}
+
+
+/* VUE SELECT */
+
+.v-select.searchable .dropdown-toggle {
+    display: flex;
 }

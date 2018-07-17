@@ -1,33 +1,35 @@
 <template>
-    <div class="history">
-        <div class="container p-4 shadow">
+  <div class="history">
+    <div class="container">
 
-            <div class="filter-bar mb-2 border-bottom pb-4">
-                <div class="row">
-                    <div class="col-md-9">
-                        <h3>Últimas visitas: {{ status }}</h3>
-                    </div>
-                    <div class="col-md-3">
-                        <select id="apartmentNumber" class="form-control" v-model="depto">
-                            <option :selected="true">Todas</option>
-                            <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
-                        </select>
-                    </div>
-                </div>
+      <div class="box-historycal p-4 shadow bg-white">
+
+        <div class="filter-bar mb-2 border-bottom pb-4">
+          <div class="row">
+            <div class="col-md-9">
+              <h3>Últimas visitas: {{ status }}</h3>
             </div>
-
-            <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
-                <div class="mr-3">
-                    <h3>{{ visit.apartment }}</h3>
-                </div>
-                <div class="media-body">
-                    <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
-                    <small class="text-muted">{{ visit.date }}</small>
-                </div>
+            <div class="col-md-3">
+              <select id="apartmentNumber" class="form-control" v-model="depto">
+                <option :selected="true">Todas</option>
+                <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
+              </select>
             </div>
-
+          </div>
         </div>
+
+        <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
+          <div class="mr-3">
+            <h3>{{ visit.apartment }}</h3>
+          </div>
+          <div class="media-body">
+            <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
+            <small class="text-muted">{{ visit.date }}</small>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -44,8 +46,7 @@ export default {
   },
   data() {
     return {
-      depto: "Todas",
-      status: "Todas"
+      depto: "Todas"
     };
   },
   computed: {
@@ -60,6 +61,13 @@ export default {
           }
         });
         return a;
+      }
+    },
+    status: function() {
+      if (this.depto === "Todas") {
+        return "Todas";
+      } else {
+        return this.depto.number;
       }
     }
   },
@@ -103,11 +111,3 @@ export default {
 };
 </script>
 
-
-<style lang="scss" scoped>
-.history {
-  .container {
-    background: #fff;
-  }
-}
-</style>
