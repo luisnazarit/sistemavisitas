@@ -56,17 +56,24 @@
     </div>
     <div class="login-box" v-else>
       <div class="container d-flex justify-content-center">
-        <form class="box p-5 w-50 bg-white" @submit.prevent="signIn">
-          <div class="form-group">
-            <label for="">Usuario</label>
-            <input id="emailLogin" type="text" class="form-control" />
+        <div class="card card-login">
+          <div class="card-header">
+            <h3>Ingresar</h3>
           </div>
-          <div class="form-group">
-            <label for="">Clave</label>
-            <input id="passLogin" type="password" class="form-control" />
+          <div class="card-body p-5">
+            <form @submit.prevent="signIn">
+              <div class="form-group">
+                <label for="">Usuario</label>
+                <input id="emailLogin" type="text" class="form-control form-control-lg" />
+              </div>
+              <div class="form-group">
+                <label for="">Clave</label>
+                <input id="passLogin" type="password" class="form-control form-control-lg" />
+              </div>
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
+            </form>
           </div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -210,9 +217,22 @@ export default {
   color: #7586a0;
   padding: 0.3rem;
   font-size: 14px;
+  &.is-admin {
+    background: #bd0f34;
+    color: rgba(255, 255, 255, 0.6);
+    .ml-auto {
+      background: rgba(0, 0, 0, 0.2);
+      margin: -0.3rem;
+      padding: 0.3rem 1rem;
+    }
+  }
   a {
     color: #fff;
   }
+}
+
+.card-login {
+  width: 500px;
 }
 
 .nav-tabs {

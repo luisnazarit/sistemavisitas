@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-2">
           <label for="apartmentNumber">Depto:</label>
-          <select id="apartmentNumber" class="form-control" v-model="depto">
+          <select id="apartmentNumber" class="form-control form-control-lg" v-model="depto">
             <option disabled :selected="true">Seleccione Depto</option>
             <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
           </select>
@@ -13,16 +13,16 @@
         </div>
         <div class="col-md-4">
           <label>Nombre:</label>
-          <input :disabled="!depto" class="form-control" type="text" v-model="name" placeholder="Nombre">
+          <input :disabled="!depto" class="form-control form-control-lg" type="text" v-model="name" placeholder="Nombre">
         </div>
         <div class="col-md-4">
           <label>Rut:</label>
-          <input v-rut @keyup="validaterut" :disabled="!depto" :class="classRut ? '' : 'error'" class="form-control" type="text" v-model="rut" placeholder="Rut">
+          <input v-rut @keyup="validaterut" :disabled="!depto" :class="classRut ? '' : 'error'" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut">
           <small class="text-danger error-form" v-if="classRut === false">Rut inválido</small>
         </div>
 
         <div class="col-md-2 d-flex align-items-end">
-          <button :disabled="validateForm" class="btn btn-primary" @click="addVisit">
+          <button :disabled="validateForm" class="btn btn-primary btn-lg" @click="addVisit">
             <svg style="width:18px;height:18px" viewBox="0 0 24 24">
               <path fill="#FFFFFF" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
             </svg>

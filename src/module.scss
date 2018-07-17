@@ -74,16 +74,18 @@ h3,h4 {
 }
 .overlay {
     .card {
-        border: 0;
         height: 90vh;
-        .card-header {
-            color: #FFF;
-            border: 0;
-            background: #3982e4;
-        }
-        .card-body {
-            overflow: auto;
-        }
+    }
+}
+.card {
+    border: 0;
+    .card-header {
+        color: #FFF;
+        border: 0;
+        background: #3982e4;
+    }
+    .card-body {
+        overflow: auto;
     }
 }
 
