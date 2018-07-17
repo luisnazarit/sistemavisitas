@@ -4,10 +4,10 @@
 
       <div class="box-historycal p-4 shadow bg-white">
 
-        <div class="filter-bar mb-2 border-bottom pb-4">
+        <div class="filter-bar mb-4 border-bottom pb-3">
           <div class="row">
             <div class="col-md-9">
-              <h3>Últimas visitas: {{ status }}</h3>
+              <h3 class="h4">Últimas visitas: {{ status }}</h3>
             </div>
             <div class="col-md-3">
               <select id="apartmentNumber" class="form-control" v-model="depto">
@@ -20,7 +20,7 @@
 
         <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
           <div class="mr-3">
-            <h3>{{ visit.apartment }}</h3>
+            <h3 class="highlight">{{ visit.apartment }}</h3>
           </div>
           <div class="media-body">
             <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
@@ -110,4 +110,3 @@ export default {
   }
 };
 </script>
-

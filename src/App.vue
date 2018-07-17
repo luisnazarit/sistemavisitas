@@ -196,6 +196,7 @@ export default {
     color: #999;
     border-radius: 0;
     border-bottom: 2px solid transparent;
+    font-size: 1.1rem;
     &.active {
       border-color: #3982e4;
       color: #3982e4;

@@ -62,7 +62,7 @@
                     <strong>{{ visit.name }} </strong>
                   </p>
                   <span> {{ visit.rut | rut }}</span>
-                  <span class="text-muted ml-auto">{{ visit.date }}</span>
+                  <span class="text-muted ml-auto">{{ visit.date | date }}</span>
                 </div>
               </div>
             </div>
@@ -126,44 +126,9 @@ export default {
     }
   },
   methods: {
-    formatDate: function(date) {
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-
-      const day = date.getDate();
-      const monthIndex = date.getMonth();
-      const year = date.getFullYear();
-      const hour = date.getHours();
-      const minutes = date.getMinutes();
-      const time = date.getTime();
-
-      return (
-        day +
-        " " +
-        monthNames[monthIndex] +
-        " " +
-        year +
-        " " +
-        hour +
-        ":" +
-        minutes
-      );
-    },
     addVisit: function() {
       //const newdate = this.formatDate(new Date());
-      const newdate = new Date(dateString);
+      const newdate = new Date().toString();
 
       visitsRef.push({
         apartment: this.depto.number,
