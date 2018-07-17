@@ -62,7 +62,7 @@
                     <strong>{{ visit.name }} </strong>
                   </p>
                   <span> {{ visit.rut | rut }}</span>
-                  <span class="text-muted ml-auto">{{ visit.date | date }}</span>
+                  <span class="text-muted ml-auto">{{ visit.date }}</span>
                 </div>
               </div>
             </div>

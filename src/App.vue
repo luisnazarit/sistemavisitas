@@ -1,7 +1,7 @@
 <template>
   <div id="app">
+    <notifications group="foo" position="top center" />
     <div class="is-loged" v-if="login.isLoged">
-      <notifications group="foo" position="top center" />
 
       <div class="top d-flex align" :class="login.isAdmin ?'is-admin':''">
         Usuario logeado:
@@ -44,7 +44,7 @@
     </div>
     <div class="login-box" v-else>
       <div class="container d-flex justify-content-center">
-        <div class="box p-5 w-50 bg-white">
+        <form class="box p-5 w-50 bg-white" @submit.prevent="signIn">
           <div class="form-group">
             <label for="">Usuario</label>
             <input id="emailLogin" type="text" class="form-control" />
@@ -53,8 +53,8 @@
             <label for="">Clave</label>
             <input id="passLogin" type="password" class="form-control" />
           </div>
-          <button class="btn btn-primary btn-lg btn-block" @click="larry">Ingresar</button>
-        </div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
+        </form>
       </div>
     </div>
   </div>
@@ -98,11 +98,18 @@ export default {
     };
   },
   methods: {
-    addNotification: function(title, msg) {
+    addNotification: function(title, msg, type) {
+      let typeA;
+      if (type === null) {
+        typeA = "success";
+      } else {
+        typeA = type;
+      }
       this.$notify({
         group: "foo",
         title: title,
-        text: msg
+        text: msg,
+        type: typeA
       });
     },
     toggleApartment(res) {
@@ -114,19 +121,28 @@ export default {
       this.addApartmentPanel = res;
       this.deptosIndexPanel = false;
     },
-    larry: function() {
+    signIn: function() {
       let email = document.getElementById("emailLogin").value;
       let password = document.getElementById("passLogin").value;
 
       auth
         .signInWithEmailAndPassword(email, password)
-        .then(function(result) {
+        .then(result => {
           this.login.isLoged = true;
           this.ifConected;
+          this.addNotification(
+            "Ingreso exitoso",
+            `Ingresando con cuenta ${email} `,
+            "success"
+          );
         })
-        .catch(function(error) {
-          // Some error occurred, you can inspect the code: error.code
-          // Common errors could be invalid email and invalid or expired OTPs.
+        .catch(error => {
+          console.log(this.deptosIndexPanel);
+          this.addNotification(
+            "Error",
+            "Usuario o contraseña incorrecta",
+            "error"
+          );
         });
     },
     ifConected: function() {
@@ -144,19 +160,23 @@ export default {
       });
     },
     logOut: function() {
-      auth
-        .auth()
-        .signOut()
-        .then(() => {
-          this.login.isLoged = false;
-          this.addNotification(
-            "Desconectado",
-            "Se ha desconectado de la sessión"
-          );
-        })
-        .catch(function(error) {
-          // An error happened.
-        });
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          auth
+            .signOut()
+            .then(() => {
+              this.login.isLoged = false;
+              this.addNotification(
+                "Desconectado",
+                "Se ha desconectado de la sessión"
+              );
+              location.reload();
+            })
+            .catch(function(error) {
+              // An error happened.
+            });
+        }
+      });
     }
   },
   mounted() {
