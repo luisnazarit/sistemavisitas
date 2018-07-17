@@ -2,10 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueFire from 'vuefire'
 import './module.scss'
-import vueRut from 'vue-rut'
+import VeeValidate from 'vee-validate';
+ 
+
+
+import { rutInputDirective, rutFilter } from 'vue-dni';
 import Notifications from 'vue-notification'
 import vSelect from 'vue-select'
 Vue.component('v-select', vSelect)
+
+Vue.filter('rutFilter', rutFilter);
+Vue.directive('rut', rutInputDirective);
 
 Vue.filter('date', function (date){
   const monthNames = [
@@ -45,7 +52,7 @@ Vue.filter('date', function (date){
 
 Vue.config.productionTip = false
 
-Vue.use(vueRut);
+Vue.use(VeeValidate);
 Vue.use(VueFire);
 Vue.use(Notifications)
 

@@ -17,12 +17,13 @@
         </div>
         <div class="col-md-4">
           <label>Rut:</label>
-          <input v-rut @keyup="validaterut" :disabled="!depto" :class="classRut ? '' : 'error'" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut">
-          <small class="text-danger error-form" v-if="classRut === false">Rut inválido</small>
+          <input v-rut:live name="rutname" :disabled="!depto" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
+          <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
+
         </div>
 
         <div class="col-md-2 d-flex align-items-end">
-          <button :disabled="validateForm" class="btn btn-primary btn-lg" @click="addVisit">
+          <button :disabled="rut === '' || errors.has('rutname')" class="btn btn-primary btn-lg" @click="addVisit">
             <svg style="width:18px;height:18px" viewBox="0 0 24 24">
               <path fill="#FFFFFF" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
             </svg>
@@ -56,13 +57,13 @@
                 Este departamento no registra visitas
               </div>
               <div v-else>
-                <transition-group name="fade">
+                <transition-group name="fade" class="reverse-order">
                   <div class="well-light mb-1" v-for="visit in visitFiltered" :key="visit['.key']">
                     <div class="mb-0 d-flex">
                       <p class="mb-0 mr-3">
                         <strong>{{ visit.name }} </strong>
                       </p>
-                      <span> {{ visit.rut | rut }}</span>
+                      <span> {{ visit.rut | rutFilter }}</span>
                       <span class="text-muted ml-auto">{{ visit.date }}</span>
                     </div>
                   </div>
@@ -82,6 +83,8 @@
 import autorized from "../components/autorized";
 import { db, auth } from "../components/configFirebase";
 import _ from "lodash";
+import { Validator } from "vee-validate";
+import { rutValidator } from "vue-dni";
 
 let apartmentsRef = db.ref("apartments");
 let visitsRef = db.ref("visits");
@@ -99,8 +102,7 @@ export default {
     return {
       name: "",
       depto: "",
-      rut: "",
-      classRut: true
+      rut: ""
     };
   },
   computed: {
@@ -119,13 +121,6 @@ export default {
         }
       });
       return a;
-    },
-    validateForm: function() {
-      if (this.name !== "" && this.rut !== null) {
-        return false;
-      } else {
-        return true;
-      }
     }
   },
   methods: {
@@ -169,17 +164,16 @@ export default {
           }
         }
       );
-    },
-    validaterut: _.debounce(function() {
-      if (this.rut === null) {
-        this.classRut = false;
-      } else {
-        this.classRut = true;
-      }
-    }, 1500)
+
+      this.name = "";
+      this.rut = "";
+    }
   },
   mounted() {
     //console.log(this.apartments);
+  },
+  created() {
+    Validator.extend("rut", rutValidator);
   }
 };
 </script>
@@ -202,5 +196,11 @@ export default {
 .error-form {
   position: absolute;
   bottom: -23px;
+}
+
+.reverse-order {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
 }
 </style>
