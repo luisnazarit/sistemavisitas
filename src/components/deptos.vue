@@ -13,25 +13,25 @@
 
         <div class="card-body p-4 body-form">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="apartment-number">Apartment Number</label>
+            <label class="col-sm-3 col-form-label" for="apartment-number">Número Departamento</label>
             <div class="col-md-9">
               <input class="form-control" type="text" v-model="newApartment.number" />
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="apartment-name">Owner Name</label>
+            <label class="col-sm-3 col-form-label" for="apartment-name">Nombre Dueño</label>
             <div class="col-md-9">
               <input class="form-control" id="apartment-name" type="text" v-model="newApartment.name" />
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="apartment-parking">Parking Number</label>
+            <label class="col-sm-3 col-form-label" for="apartment-parking">Número Estacionamiento</label>
             <div class="col-md-9">
               <input class="form-control" id="apartmetn-parking" type="text" v-model="newApartment.parking" />
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="apartment-lesse">Lesse Name</label>
+            <label class="col-sm-3 col-form-label" for="apartment-lesse">Nombre Arrendatario</label>
             <div class="col-md-9">
               <input class="form-control" id="apartment-lesse" type="text" v-model="newApartment.lessee" />
             </div>
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="apartment-phone">Phone</label>
+            <label class="col-sm-3 col-form-label" for="apartment-phone">Teléfono</label>
             <div class="col-md-9">
               <input class="form-control" id="apartment-phone" type="text" v-model="newApartment.phone" />
             </div>

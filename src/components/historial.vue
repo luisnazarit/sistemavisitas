@@ -2,7 +2,7 @@
   <div class="history">
     <div class="container">
 
-      <div class="box-historycal p-4 shadow bg-white">
+      <div class="box-historycal p-5 shadow bg-white">
 
         <div class="filter-bar mb-4 border-bottom pb-3">
           <div class="row">

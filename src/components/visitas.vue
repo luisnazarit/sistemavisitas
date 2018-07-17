@@ -126,16 +126,46 @@ export default {
     }
   },
   methods: {
+    addNotification: function(title, msg, type) {
+      let typeA;
+      if (type === null) {
+        typeA = "success";
+      } else {
+        typeA = type;
+      }
+      this.$notify({
+        group: "foo",
+        title: title,
+        text: msg,
+        type: typeA
+      });
+    },
     addVisit: function() {
-      //const newdate = this.formatDate(new Date());
       const newdate = new Date().toString();
 
-      visitsRef.push({
-        apartment: this.depto.number,
-        name: this.name,
-        rut: this.rut,
-        date: newdate
-      });
+      visitsRef.push(
+        {
+          apartment: this.depto.number,
+          name: this.name,
+          rut: this.rut,
+          date: newdate
+        },
+        error => {
+          if (error) {
+            this.addNotification(
+              "Error",
+              "No se pudo agregar la visita",
+              "error"
+            );
+          } else {
+            this.addNotification(
+              "Ingreso exitoso",
+              "Se agregó la visita correctamente",
+              "success"
+            );
+          }
+        }
+      );
     },
     validaterut: _.debounce(function() {
       if (this.rut === null) {
