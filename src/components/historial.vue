@@ -25,14 +25,15 @@
             </div>
           </div>
         </div>
-
-        <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
-          <div class="mr-3">
-            <h3 class="highlight">{{ visit.apartment }}</h3>
-          </div>
-          <div class="media-body">
-            <p class="mb-0">{{ visit.name }}, {{ visit.rut}}</p>
-            <small class="text-muted">{{ visit.date }}</small>
+        <div class="list-historycal sb">
+          <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
+            <div class="mr-3">
+              <h3 class="highlight">{{ visit.apartment }}</h3>
+            </div>
+            <div class="media-body">
+              <p class="mb-0">{{ visit.name }}, {{ visit.rut | rutFilter }}</p>
+              <small class="text-muted">{{ visit.date }}</small>
+            </div>
           </div>
         </div>
       </div>
@@ -123,3 +124,16 @@ export default {
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.box-historycal {
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+.list-historycal {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+</style>

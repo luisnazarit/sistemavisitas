@@ -4,6 +4,7 @@
       <div class="p-5 bg-white">
         <div class="mb-4">
           <input class="form-control form-control-lg" type="text" v-model="search" placeholder="Buscar persona" />
+          <p class="text-muted mt-1">Buscar por nombre a dueño para identificar rápidamente a que departamento pertenece</p>
         </div>
         <div v-if="filteredApartments.length !== 0">
           <div class="list-users" v-if="search !== ''">
@@ -16,8 +17,11 @@
           </div>
         </div>
         <div v-else>
-          No hay personas asociadas a los departamentos con el nombre
-          <strong>{{ search }}</strong>
+          <div class="bg-warning p-4 text-center mt-5">
+            No hay personas asociadas a los departamentos con el nombre
+            <strong>{{ search }}</strong>
+          </div>
+
         </div>
       </div>
     </div>

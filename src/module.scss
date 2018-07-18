@@ -97,6 +97,18 @@ strong {
     border-radius: .25rem;
 }
 
+.sb::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sb::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+.sb::-webkit-scrollbar-thumb {
+    background: #3982e4; 
+}
+
 
 /* VUE SELECT */
 
