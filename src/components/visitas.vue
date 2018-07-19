@@ -43,13 +43,33 @@
             <div class="col-md-4 p-4 border-right">
               <h3 class="h4">Información del depto</h3>
               <hr />
-              <h5>{{ deptoSelected.number }}</h5>
+              <h5>
+                <span class="highlight d-inline-flex align-items-center">
+                  <svg style="width:18;height:18px" class="mr-2" viewBox="0 0 24 24">
+                    <path style="opacity: 0.9" fill="#212529" d="M5,3V21H11V17.5H13V21H19V3H5M7,5H9V7H7V5M11,5H13V7H11V5M15,5H17V7H15V5M7,9H9V11H7V9M11,9H13V11H11V9M15,9H17V11H15V9M7,13H9V15H7V13M11,13H13V15H11V13M15,13H17V15H15V13M7,17H9V19H7V17M15,17H17V19H15V17Z" />
+                  </svg>
+                  {{ deptoSelected.number }}</span>
+              </h5>
+              <small class="d-block text-muted mb-3">La información es de la persona que reside en el departamento, puede ser el dueño o arrendatario</small>
+              <p class="mb-1">
+                <strong>Nombre: </strong>
+                <span>{{ deptoSelected.lessee }}</span>
+              </p>
+              <p class="mb-1">
+                <strong>Teléfono: </strong>
+                <span v-if="deptoSelected.lesseePhone === ''" class="text-muted">Sin info</span>
+                <span v-else>{{ deptoSelected.lesseePhone }}</span>
+              </p>
+              <p class="mb-1">
+                <strong>Email: </strong>
+                <span v-if="deptoSelected.lesseeEmail === ''" class="text-muted">Sin info</span>
+                <span v-else>{{ deptoSelected.lesseeEmail }}</span>
+              </p>
               <p class="mb-0">
-                <strong>Dueño:</strong> {{ deptoSelected.name }}</p>
-              <p class="mb-0">
-                <strong>Teléfono:</strong> {{ deptoSelected.phone }}</p>
-              <p class="mb-0">
-                <strong>Estacionamiento:</strong> {{ deptoSelected.parking }}</p>
+                <strong>Estacionamiento: </strong>
+                <span v-if="deptoSelected.parking === ''" class="text-muted">Sin estacionamiento</span>
+                <span v-else>{{ deptoSelected.parking }}</span>
+              </p>
 
               <autorized :info="deptoSelected.autorized" />
 
@@ -88,6 +108,7 @@ import { db, auth } from "../components/configFirebase";
 import { Validator } from "vee-validate";
 import { rutValidator } from "vue-dni";
 import Multiselect from "vue-multiselect";
+import moment from "moment";
 
 let apartmentsRef = db.ref("apartments");
 let visitsRef = db.ref("visits");
@@ -153,7 +174,8 @@ export default {
       });
     },
     addVisit: function() {
-      const newdate = new Date().toString();
+      const newdate = new Date().toDateString();
+      const hour = new Date();
 
       visitsRef.push(
         {

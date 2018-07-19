@@ -204,6 +204,8 @@ export default {
           "Departamento Agregado",
           "Departamento agregado exitosamente"
         );
+      this.isSame = false;
+      this.disabledAttr = false;
     },
     closePanel: function() {
       this.$emit("close", false);
