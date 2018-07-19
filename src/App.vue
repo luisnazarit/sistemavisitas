@@ -21,10 +21,6 @@
 
       </div>
 
-      <div v-if="addApartmentPanel">
-        <deptos @close="closePanel($event)" />
-      </div>
-
       <div v-if="deptosIndexPanel">
         <deptosIndex @close="closePanel($event)" @toggle="toggleApartment($event)" />
       </div>
@@ -122,7 +118,6 @@ export default {
         pass: ""
       },
       panel: "addVisit",
-      addApartmentPanel: false,
       deptosIndexPanel: false,
       depto: "",
       deptoKey: "",
@@ -222,7 +217,7 @@ export default {
   background: #192329;
   padding: 0.3rem;
   position: fixed;
-  z-index: 2;
+  z-index: 999;
   left: 0;
   right: 0;
   top: 0;

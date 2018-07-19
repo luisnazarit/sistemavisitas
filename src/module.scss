@@ -85,6 +85,8 @@ strong {
         color: #FFF;
         border: 0;
         background: #3982e4;
+        display: flex;
+        align-items: center
     }
     .card-body {
         overflow: auto;
@@ -122,7 +124,9 @@ strong {
     .multiselect__select {
         min-height: 48px
     }
-
+    .multiselect__single {
+        margin-top: 8px;
+    }
     .multiselect__option--highlight {
         background: #3982e4;
     }
