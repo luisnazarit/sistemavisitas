@@ -3,19 +3,22 @@
     <div class="box-add-visit mb-1 p-5 shadow">
       <h3 class="mb-4">Ingresar visita a depto</h3>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="apartmentNumber">Depto:</label>
-          <select id="apartmentNumber" class="form-control form-control-lg" v-model="depto">
+
+          <select id="apartmentNumber" class="form-control form-control-lg d-none" v-model="depto">
             <option disabled :selected="true">Seleccione Depto</option>
             <option v-for="apartment in apartments" :key="apartment['.key']" :value="apartment">{{ apartment.number }}</option>
           </select>
+
+          <multiselect select-label="" class="multiselect-lg" deselect-label="" selected-label="" placeholder="Depto" v-model="depto" :options="deptos" />
 
         </div>
         <div class="col-md-4">
           <label>Nombre:</label>
           <input :disabled="!depto" class="form-control form-control-lg" type="text" v-model="name" placeholder="Nombre">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Rut:</label>
           <input v-rut:live name="rutname" :disabled="!depto" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
           <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
@@ -34,25 +37,25 @@
       </div>
     </div>
     <transition name="fade">
-      <div class="info-visitas" v-if="depto.number">
+      <div class="info-visitas" v-if="deptoSelected.number">
         <div class="container shadow">
           <div class="row p-0">
             <div class="col-md-4 p-4 border-right">
               <h3 class="h4">Información del depto</h3>
               <hr />
-              <h5>{{ depto.number }}</h5>
+              <h5>{{ deptoSelected.number }}</h5>
               <p class="mb-0">
-                <strong>Dueño:</strong> {{ depto.name }}</p>
+                <strong>Dueño:</strong> {{ deptoSelected.name }}</p>
               <p class="mb-0">
-                <strong>Teléfono:</strong> {{ depto.phone }}</p>
+                <strong>Teléfono:</strong> {{ deptoSelected.phone }}</p>
               <p class="mb-0">
-                <strong>Estacionamiento:</strong> {{ depto.parking }}</p>
+                <strong>Estacionamiento:</strong> {{ deptoSelected.parking }}</p>
 
-              <autorized :info="depto.autorized" />
+              <autorized :info="deptoSelected.autorized" />
 
             </div>
             <div class="col-md-8 p-5">
-              <h4 class="mb-3">Visitas en depto {{ depto.number }}</h4>
+              <h4 class="mb-3">Visitas en depto {{ deptoSelected.number }}</h4>
               <div v-if="visitFiltered.length === 0">
                 Este departamento no registra visitas
               </div>
@@ -82,9 +85,9 @@
 <script>
 import autorized from "../components/autorized";
 import { db, auth } from "../components/configFirebase";
-import _ from "lodash";
 import { Validator } from "vee-validate";
 import { rutValidator } from "vue-dni";
+import Multiselect from "vue-multiselect";
 
 let apartmentsRef = db.ref("apartments");
 let visitsRef = db.ref("visits");
@@ -92,7 +95,8 @@ let visitsRef = db.ref("visits");
 export default {
   name: "visitas",
   components: {
-    autorized: autorized
+    autorized: autorized,
+    Multiselect
   },
   firebase: {
     apartments: apartmentsRef.orderByChild("number"),
@@ -101,22 +105,32 @@ export default {
   data() {
     return {
       name: "",
+      rut: "",
       depto: "",
-      rut: ""
+      as: [],
+      deptoPanel: ""
     };
   },
   computed: {
     deptos: function() {
-      let a = [];
       this.apartments.forEach(i => {
-        a.push(i.number);
+        this.as.push(i.number);
       });
-      return a;
+      return this.as;
+    },
+    deptoSelected: function() {
+      let b = {};
+      this.apartments.forEach(i => {
+        if (this.depto === i.number) {
+          b = i;
+        }
+      });
+      return b;
     },
     visitFiltered: function() {
       var a = [];
       this.visits.forEach(child => {
-        if (child.apartment === this.depto.number) {
+        if (child.apartment === this.deptoSelected.number) {
           a.push(child);
         }
       });
@@ -143,7 +157,7 @@ export default {
 
       visitsRef.push(
         {
-          apartment: this.depto.number,
+          apartment: this.deptoSelected.number,
           name: this.name,
           rut: this.rut,
           date: newdate
@@ -190,7 +204,6 @@ export default {
   .container {
     background: #fff;
     position: relative;
-    z-index: 9;
   }
 }
 .error-form {

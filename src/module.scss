@@ -112,6 +112,19 @@ strong {
 
 /* VUE SELECT */
 
-.v-select.searchable .dropdown-toggle {
-    display: flex;
-}
+.multiselect-lg {
+    .multiselect__tags {
+          display: flex;
+    align-items: center;
+    padding: 0 8px;
+    min-height: 48px;
+    }
+    .multiselect__select {
+        min-height: 48px
+    }
+
+    .multiselect__option--highlight {
+        background: #3982e4;
+    }
+
+  }

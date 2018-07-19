@@ -2,14 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueFire from 'vuefire'
 import './module.scss'
+import '../node_modules/vue-multiselect/dist/vue-multiselect.min.css'
 import VeeValidate from 'vee-validate';
- 
 
 
 import { rutInputDirective, rutFilter } from 'vue-dni';
 import Notifications from 'vue-notification'
-import vSelect from 'vue-select'
-Vue.component('v-select', vSelect)
+
+
+
 
 Vue.filter('rutFilter', rutFilter);
 Vue.directive('rut', rutInputDirective);
@@ -55,6 +56,7 @@ Vue.config.productionTip = false
 Vue.use(VeeValidate);
 Vue.use(VueFire);
 Vue.use(Notifications)
+
 
 new Vue({
   render: h => h(App)

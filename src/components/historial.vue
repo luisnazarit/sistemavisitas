@@ -25,7 +25,7 @@
             </div>
           </div>
         </div>
-        <div class="list-historycal sb">
+        <div class="list-historycal sb" v-if="visitsFiltered.length !== 0">
           <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
             <div class="mr-3">
               <h3 class="highlight">{{ visit.apartment }}</h3>
@@ -36,6 +36,14 @@
             </div>
           </div>
         </div>
+
+        <div v-else>
+          <div class="bg-light p-5 text-center">
+            <h5>El departamento
+              <strong>{{ depto.number }}</strong> no registra visitas</h5>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
