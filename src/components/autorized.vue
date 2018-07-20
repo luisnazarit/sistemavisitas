@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="row no-gutters mb-1" v-for="(aut, index) in autorizados" :key="index">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <input class="form-control" type="text" v-model="aut.name">
             </div>
             <div class="col-md-5">
-                <input class="form-control" type="text" v-model="aut.rut">
+                <input class="form-control ml-1" type="text" v-model="aut.rut">
             </div>
             <div class="col-md-1">
                 <button class="btn btn-danger p-1 ml-2" @click="removeAut(aut)">
