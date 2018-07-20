@@ -23,15 +23,11 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 8%;">Número</th>
-                      <th style="width: 14%;">Nombre</th>
-                      <th style="width: 9%;">Rut</th>
-                      <th style="width: 14%;">Arrendatario</th>
-                      <th style="width: 9%;">Teléfono</th>
-                      <th style="width: 15%;">Email</th>
-                      <th style="width: 7%">Est.</th>
+                      <th style="width: 23%;">Informacion depto</th>
+                      <th style="width: 23%;">Dueño</th>
+                      <th style="width: 23%;">Arrendatario</th>
                       <th>Autorizados</th>
-                      <th style="width: 220px;" class="text-right">Acciones</th>
+                      <th style="width: 120px;" class="text-right">Acciones</th>
                     </tr>
                   </thead>
                 </table>
@@ -42,66 +38,76 @@
                   <tbody>
 
                     <tr v-for="depto in filteredApartments" :key="depto['.key']">
-                      <td style="width: 8%">
+                      <td style="width: 23%">
                         <div v-if="depto.isEditing">
-                          <input id="numberForm" type="text" class="form-control" :value="depto.number">
+                          <label>Número</label>
+                          <input id="numberForm" type="text" class="form-control mb-1" :value="depto.number">
+                          <label>Estacionamiento</label>
+                          <input id="parkingForm" type="text" class="form-control mb-1" :value="depto.parking">
+                          <label>Bodega</label>
+                          <input id="cellarForm" type="text" class="form-control mb-0" :value="depto.cellar">
                         </div>
                         <div v-else>
-                          <strong>{{ depto.number }}</strong>
+                          <h6 class="mb-1">
+                            <strong>{{ depto.number }}</strong>
+                          </h6>
+                          <p class="mb-1">
+                            <strong>Estacionamiento:</strong> {{ depto.parking }}</p>
+                          <p class="mb-0">
+                            <strong>Bodega:</strong> {{ depto.cellar }}</p>
                         </div>
                       </td>
-                      <td style="width: 14%;">
+
+                      <td style="width: 23%">
                         <div v-if="depto.isEditing">
-                          <input id="nameForm" type="text" class="form-control" :value="depto.name">
+                          <label>Dueño:</label>
+                          <input id="nameForm" type="text" class="form-control mb-1" :value="depto.name">
+                          <label>Rut:</label>
+                          <input id="rutForm" type="text" class="form-control mb-1" :value="depto.rut">
+                          <label>Email</label>
+                          <input id="emailForm" type="text" class="form-control mb-1" :value="depto.email">
+                          <label>Fono</label>
+                          <input id="phoneForm" type="text" class="form-control mb-0" :value="depto.phone">
                         </div>
                         <div v-else>
-                          <span>{{ depto.name }}</span>
+                          <p class="mb-1">
+                            <strong>Nombre:</strong> {{ depto.name }}</p>
+                          <p class="mb-1">
+                            <strong>Rut:</strong> {{ depto.rut }}</p>
+                          <p class="mb-0">
+                            <strong>Email:</strong> {{ depto.email }}</p>
+                          <p class="mb-0">
+                            <strong>Fono:</strong> {{ depto.phone }}</p>
                         </div>
                       </td>
-                      <td style="width: 9%;">
+
+                      <td style="width: 23%">
                         <div v-if="depto.isEditing">
-                          <input id="rutForm" type="text" class="form-control" :value="depto.rut">
+                          <label>Nombre:</label>
+                          <input id="lesseeForm" type="text" class="form-control mb-1" :value="depto.lessee">
+                          <label>Rut:</label>
+                          <input id="lesseeRutForm" type="text" class="form-control mb-1" :value="depto.lesseeRut">
+                          <label>Email</label>
+                          <input id="lesseeEmailForm" type="text" class="form-control mb-1" :value="depto.lesseeEmail">
+                          <label>Fono</label>
+                          <input id="lesseePhoneForm" type="text" class="form-control mb-0" :value="depto.lesseePhone">
                         </div>
                         <div v-else>
-                          {{ depto.rut }}
+                          <p class="mb-1">
+                            <strong>Nombre:</strong> {{ depto.lessee }}</p>
+                          <p class="mb-1">
+                            <strong>Rut:</strong> {{ depto.lesseeRut }}</p>
+                          <p class="mb-0">
+                            <strong>Email:</strong> {{ depto.lesseeEmail }}</p>
+                          <p class="mb-0">
+                            <strong>Fono:</strong> {{ depto.lesseePhone }}</p>
                         </div>
                       </td>
-                      <td style="width: 14%;" class="overflow-text">
-                        <div v-if="depto.isEditing">
-                          <input id="lesseeForm" type="text" class="form-control" :value="depto.lessee">
-                        </div>
-                        <div v-else>
-                          <span>{{ depto.lessee }}</span>
-                        </div>
+                      <td class="width: 23%">
+                        <autorized />
                       </td>
-                      <td style="width: 9%;">
-                        <div v-if="depto.isEditing">
-                          <input id="phoneForm" type="text" class="form-control" :value="depto.phone">
-                        </div>
-                        <div v-else>
-                          {{ depto.phone }}
-                        </div>
-                      </td>
-                      <td style="width: 15%;" class="overflow-text">
-                        <div v-if="depto.isEditing">
-                          <input id="emailForm" type="text" class="form-control" :value="depto.email">
-                        </div>
-                        <div v-else>
-                          <span>{{ depto.email }}</span>
-                        </div>
-                      </td>
-                      <td style="width: 7%;">
-                        <div v-if="depto.isEditing">
-                          <input id="parkingForm" type="text" class="form-control" :value="depto.parking">
-                        </div>
-                        <div v-else>
-                          {{ depto.parking }}
-                        </div>
-                      </td>
-                      <td>
-                        {{ depto.authorized }}
-                      </td>
-                      <td class="text-right" style="width: 220px;">
+
+                      <td class="text-right" style="width: 120px;">
                         <div v-if="depto.isEditing">
                           <button class="btn btn-primary" @click="saveEditing(depto)">Guardar</button>
                           <button class="ml-1 btn btn-outline-secondary" @click="depto.isEditing = false">Cancelar</button>
@@ -149,12 +155,14 @@
 <script>
 import { db } from "../components/configFirebase";
 import deptos from "../components/deptos";
+import autorized from "../components/autorized";
 let apartmentsRef = db.ref("apartments");
 
 export default {
   name: "deptosIndex",
   components: {
-    deptos
+    deptos,
+    autorized
   },
   firebase: {
     apartments: apartmentsRef
@@ -192,21 +200,29 @@ export default {
     },
     saveEditing: function(depto) {
       let updateNumber = document.getElementById("numberForm").value;
+      let updateParking = document.getElementById("parkingForm").value;
+      let updateCellar = document.getElementById("cellarForm").value;
       let updateName = document.getElementById("nameForm").value;
       let updateRut = document.getElementById("rutForm").value;
       let updatePhone = document.getElementById("phoneForm").value;
       let updateEmail = document.getElementById("emailForm").value;
       let updateLessee = document.getElementById("lesseeForm").value;
-      let updateParking = document.getElementById("parkingForm").value;
+      let updateLesseeRut = document.getElementById("lesseeRutForm").value;
+      let updateLesseeEmail = document.getElementById("lesseeEmailForm").value;
+      let updateLesseePhone = document.getElementById("lesseePhoneForm").value;
 
       let update = {
         number: updateNumber,
+        parking: updateParking,
+        cellar: updateCellar,
         name: updateName,
         rut: updateRut,
-        parking: updateParking,
-        lessee: updateLessee,
         phone: updatePhone,
-        email: updateEmail
+        email: updateEmail,
+        lessee: updateLessee,
+        lesseeRut: updateLesseeRut,
+        lesseeEmail: updateLesseeEmail,
+        lesseePhone: updateLesseePhone
       };
 
       apartmentsRef.child(depto[".key"]).update(update);
@@ -288,6 +304,6 @@ export default {
   }
 }
 td {
-  vertical-align: middle;
+  vertical-align: top;
 }
 </style>

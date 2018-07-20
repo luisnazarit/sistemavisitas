@@ -3,7 +3,7 @@
     <div class="box-add-visit mb-1 p-5 shadow">
       <h3 class="mb-4">Ingresar visita a depto</h3>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="apartmentNumber">Depto:</label>
 
           <select id="apartmentNumber" class="form-control form-control-lg d-none" v-model="depto">
@@ -14,7 +14,7 @@
           <multiselect select-label="" class="multiselect-lg" deselect-label="" selected-label="" placeholder="Depto" v-model="depto" :options="deptos" />
 
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Nombre:</label>
           <input :disabled="!depto" class="form-control form-control-lg" type="text" v-model="name" placeholder="Nombre">
         </div>
@@ -22,7 +22,16 @@
           <label>Rut:</label>
           <input v-rut:live name="rutname" :disabled="!depto" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
           <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
+        </div>
 
+        <div class="col-md-2">
+          <div class="form-check check-absolute">
+            <input class="form-check-input" :disabled="!depto" type="checkbox" v-model="parkingStatus" @change="parking = ''">
+            <label class="form-check-label" for="defaultCheck1">
+              ¿ necesita estacionamiento de visitas?
+            </label>
+          </div>
+          <input :disabled="!depto || !parkingStatus" class="form-control form-control-lg" type="text" v-model="parking" placeholder="Patente">
         </div>
 
         <div class="col-md-2 d-flex align-items-end">
@@ -32,6 +41,7 @@
             </svg>
             Agregar
           </button>
+          <small> </small>
         </div>
 
       </div>
@@ -67,11 +77,9 @@
               </p>
               <p class="mb-0">
                 <strong>Estacionamiento: </strong>
-                <span v-if="deptoSelected.parking === ''" class="text-muted">Sin estacionamiento</span>
+                <span v-if="deptoSelected.parking === ''" class="text-muted">No posee estacionamiento</span>
                 <span v-else>{{ deptoSelected.parking }}</span>
               </p>
-
-              <autorized :info="deptoSelected.autorized" />
 
             </div>
             <div class="col-md-8 p-5">
@@ -88,6 +96,11 @@
                       </p>
                       <span> {{ visit.rut | rutFilter }}</span>
                       <span class="text-muted ml-auto">{{ visit.date }}</span>
+                      <span v-if="visit.parking !== ''">
+                        <svg style="width:18;height:18px" viewBox="0 0 24 24" class="mr-2">
+                          <path fill="#000000" d="M16,6H6L1,12V15H3A3,3 0 0,0 6,18A3,3 0 0,0 9,15H15A3,3 0 0,0 18,18A3,3 0 0,0 21,15H23V12C23,10.89 22.11,10 21,10H19L16,6M6.5,7.5H10.5V10H4.5L6.5,7.5M12,7.5H15.5L17.46,10H12V7.5M6,13.5A1.5,1.5 0 0,1 7.5,15A1.5,1.5 0 0,1 6,16.5A1.5,1.5 0 0,1 4.5,15A1.5,1.5 0 0,1 6,13.5M18,13.5A1.5,1.5 0 0,1 19.5,15A1.5,1.5 0 0,1 18,16.5A1.5,1.5 0 0,1 16.5,15A1.5,1.5 0 0,1 18,13.5Z" />
+                        </svg>
+                        {{ visit.parking }}</span>
                     </div>
                   </div>
                 </transition-group>
@@ -103,7 +116,6 @@
 </template>
 
 <script>
-import autorized from "../components/autorized";
 import { db, auth } from "../components/configFirebase";
 import { Validator } from "vee-validate";
 import { rutValidator } from "vue-dni";
@@ -116,7 +128,6 @@ let visitsRef = db.ref("visits");
 export default {
   name: "visitas",
   components: {
-    autorized: autorized,
     Multiselect
   },
   firebase: {
@@ -129,7 +140,9 @@ export default {
       rut: "",
       depto: "",
       as: [],
-      deptoPanel: ""
+      deptoPanel: "",
+      parking: "",
+      parkingStatus: false
     };
   },
   computed: {
@@ -182,6 +195,7 @@ export default {
           apartment: this.deptoSelected.number,
           name: this.name,
           rut: this.rut,
+          parking: this.parking,
           date: newdate
         },
         error => {
@@ -237,5 +251,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column-reverse;
+}
+
+.check-absolute {
+  width: 300px;
+  margin-bottom: 8px;
 }
 </style>
