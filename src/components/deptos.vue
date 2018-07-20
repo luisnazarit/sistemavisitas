@@ -158,7 +158,7 @@ export default {
         lesseeRut: "",
         lesseeEmail: "",
         lesseePhone: "",
-        peopleAuthorized: ""
+        peopleAuthorized: []
       },
       isSame: false,
       disabledAttr: false

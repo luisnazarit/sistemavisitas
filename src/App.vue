@@ -25,6 +25,16 @@
 
       </div>
 
+
+<hr />
+<hr />
+
+<authorized />
+
+<hr />
+<hr />
+
+
       <div v-if="deptosIndexPanel">
         <deptosIndex @close="closePanel($event)" @toggle="toggleApartment($event)" />
       </div>
@@ -96,6 +106,7 @@ import historial from "./components/historial";
 import deptos from "./components/deptos";
 import deptosIndex from "./components/deptosIndex";
 import search from "./components/search";
+import authorized from "./components/authorized";
 
 let usersRef = db.ref("users");
 let apartmentsRef = db.ref("apartments");
@@ -111,7 +122,8 @@ export default {
     historial: historial,
     deptos: deptos,
     deptosIndex: deptosIndex,
-    search: search
+    search: search,
+    authorized: authorized
   },
   data() {
     return {

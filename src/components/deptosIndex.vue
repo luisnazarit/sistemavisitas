@@ -104,7 +104,8 @@
                         </div>
                       </td>
                       <td class="width: 23%">
-                        <autorized />
+                        
+                        
                       </td>
 
                       <td class="text-right" style="width: 120px;">
@@ -155,14 +156,12 @@
 <script>
 import { db } from "../components/configFirebase";
 import deptos from "../components/deptos";
-import autorized from "../components/autorized";
 let apartmentsRef = db.ref("apartments");
 
 export default {
   name: "deptosIndex",
   components: {
-    deptos,
-    autorized
+    deptos
   },
   firebase: {
     apartments: apartmentsRef
@@ -183,6 +182,15 @@ export default {
   methods: {
     closePanel: function() {
       this.$emit("close", false);
+    },
+    newAuth: function() {
+      this.peopleAuthorizedItems.push({
+        name: '',
+        rut: ''
+      })
+    },
+    removeAut: function(aut) {
+      this.peopleAuthorizedItems.splice(aut,1)
     },
     addNew: function() {
       this.addApartmentPanel = true;
