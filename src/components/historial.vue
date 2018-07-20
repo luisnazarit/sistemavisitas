@@ -25,20 +25,22 @@
             </div>
           </div>
         </div>
-        <div class="list-historycal sb" v-if="visitsFiltered.length !== 0">
-          <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
-            <div class="mr-3">
-              <h3 class="highlight">{{ visit.apartment }}</h3>
-            </div>
-            <div class="media-body">
-              <p class="mb-0">{{ visit.name }}, {{ visit.rut | rutFilter }}</p>
-              <small class="text-muted">{{ visit.date }}</small>
+        <div :class="depto === 'Todas' ? 'reverse':''" class="list-historycal sb" v-if="visitsFiltered.length !== 0">
+          <div class="wrapper">
+            <div class="media mb-3" v-for="visit in visitsFiltered" :key="visit['.key']">
+              <div class="mr-3">
+                <h3 class="highlight">{{ visit.apartment }}</h3>
+              </div>
+              <div class="media-body">
+                <p class="mb-0">{{ visit.name }}, {{ visit.rut | rutFilter }}</p>
+                <small class="text-muted">{{ visit.date }}</small>
+              </div>
             </div>
           </div>
         </div>
 
         <div v-else>
-          <div class="bg-light p-5 text-center">
+          <div class="bg-light p-5">
             <h5>El departamento
               <strong>{{ depto.number }}</strong> no registra visitas</h5>
           </div>
@@ -58,7 +60,7 @@ let visitsRef = db.ref("visits");
 export default {
   name: "historial",
   firebase: {
-    apartments: apartmentsRef.orderByChild("number"),
+    apartments: apartmentsRef,
     visits: visitsRef
   },
   data() {
@@ -143,5 +145,11 @@ export default {
 .list-historycal {
   flex: 1 1 auto;
   overflow: auto;
+  &.reverse {
+    .wrapper {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
 }
 </style>
