@@ -16,24 +16,35 @@
       <div class="p-5">
         <div v-if="selected.length > 0">
           <div class="row no-gutters list-authorized-header">
-            <div class="col-md-5 p-2">
+            <div class="col-md-3 p-2">
               <strong>Nombre</strong>
             </div>
-            <div class="col-md-5 p-2">
+            <div class="col-md-3 p-2">
               <strong>Rut</strong>
+            </div>
+            <div class="col-md-4 p-2">
+              <strong>Imagen</strong>
             </div>
             <div class="col-md-2 p-2 text-right">
               <strong>Acciones</strong>
             </div>
           </div>
           <div class="row no-gutters list-authorized mb-1" v-for="aut in selected" :key="aut['.key']">
-            <div class="col-md-5 p-2">
+            <div class="col-md-3 p-2  d-flex align-items-center">
               {{ aut.name }}
             </div>
-            <div class="col-md-5 p-2">
+            <div class="col-md-3 p-2 d-flex align-items-center">
               {{ aut.rut }}
             </div>
-            <div class="col-md-2 p-2 text-right">
+            <div class="col-md-4 p-2 d-flex align-items-center">
+              <div v-if="aut.cover !== ''" class="wrapper-img" :style="{backgroundImage: 'url(' + aut.cover + ')'}">
+
+              </div>
+              <div v-else class="text-muted">
+                No posee imagen
+              </div>
+            </div>
+            <div class="col-md-2 p-2 justify-content-end  d-flex align-items-center">
               <button title="Eliminar Usuario" class="btn btn-danger btn-sm p-1 ml-2" @click="removeAut(aut['.key'])">
                 ELIMINAR
               </button>
@@ -49,12 +60,15 @@
         </div>
         <h4 class="mt-4">Agregar nueva persona</h4>
         <div class="row mt-3">
-          <div class="col-md-5">
+          <div class="col-md-3">
             <input type="text" class="form-control form-control-lg" v-model="userNew" placeholder="Nombre">
           </div>
-          <div class="col-md-5">
+          <div class="col-md-3">
             <input v-rut:live name="rutname" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rutNew" placeholder="Rut" v-validate="'rut'">
             <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control form-control-lg" v-model="cover" placeholder="URL de imagen">
           </div>
           <div class="col-md-2 text-right">
             <button :disabled="rutNew === '' || errors.has('rutname') || userNew === ''" class="btn btn-primary btn-lg btn-block" @click="addNew">
@@ -85,7 +99,8 @@ export default {
     return {
       as: [],
       userNew: "",
-      rutNew: ""
+      rutNew: "",
+      cover: ""
     };
   },
   methods: {
@@ -95,9 +110,10 @@ export default {
         .child("authorizedPeople")
         .push({
           name: this.userNew,
-          rut: this.rutNew
+          rut: this.rutNew,
+          cover: this.cover
         });
-      (this.userNew = ""), (this.rutNew = "");
+      (this.userNew = ""), (this.rutNew = ""), (this.cover = "");
     },
     removeAut: function(au) {
       this.$firebaseRefs.selected.child(au).remove();
@@ -142,5 +158,13 @@ strong.back {
 }
 .list-authorized-header {
   background: #e4eaf1;
+}
+
+.wrapper-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
 }
 </style>

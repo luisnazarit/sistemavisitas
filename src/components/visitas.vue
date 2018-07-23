@@ -80,6 +80,27 @@
                 <span v-if="deptoSelected.parking === ''" class="text-muted">No posee estacionamiento</span>
                 <span v-else>{{ deptoSelected.parking }}</span>
               </p>
+              <div class="people-authorized mt-5 p-3 border" v-if="deptoSelected.authorizedPeople">
+                <h4 class="h6 font-weight-bold mb-3">Personas Autorizadas</h4>
+                <div class="media mb-2 align-items-center" v-for="aut in deptoSelected.authorizedPeople" :key="aut['.key']">
+                  <div class="mr-3">
+                    <div v-if="aut.cover !== ''" class="wrapper-img" :style="{backgroundImage: 'url(' + aut.cover + ')'}">
+
+                    </div>
+                    <div v-else class="wrapper-img-no-cover">
+                      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="#FFFFFF" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="media-body">
+                    <strong>{{ aut.name }}</strong>, {{ aut.rut}}
+                  </div>
+                </div>
+              </div>
+              <div v-else class="mt-5 p-3 border text-center">
+                No hay personas autorizadas para ingresar
+              </div>
 
             </div>
             <div class="col-md-8 p-5">
@@ -261,5 +282,23 @@ export default {
 .check-absolute {
   width: 300px;
   margin-bottom: 8px;
+}
+
+.wrapper-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.wrapper-img-no-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
