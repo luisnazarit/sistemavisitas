@@ -1,7 +1,7 @@
 <template>
   <div class="overlay deptos-index">
     <div class="container">
-      <div v-if="!addApartmentPanel">
+      <div v-if="panel === 'main'">
         <div class="card">
           <div class="card-header d-flex p-3">
             <h3 class="h4 mb-0 d-flex align-items-center">Listado de departamentos
@@ -23,7 +23,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 23%;">Informacion depto</th>
+                      <th style="width: 20%;">Informacion depto</th>
                       <th style="width: 23%;">Dueño</th>
                       <th style="width: 23%;">Arrendatario</th>
                       <th>Autorizados</th>
@@ -38,7 +38,7 @@
                   <tbody>
 
                     <tr v-for="depto in filteredApartments" :key="depto['.key']">
-                      <td style="width: 23%">
+                      <td style="width: 20%">
                         <div v-if="depto.isEditing">
                           <label>Número</label>
                           <input id="numberForm" type="text" class="form-control mb-1" :value="depto.number">
@@ -104,8 +104,20 @@
                         </div>
                       </td>
                       <td class="width: 23%">
-                        
-                        
+                        <div v-for="i in depto.authorizedPeople" :key="i['.key']">
+                          <div class="row">
+                            <div class="col-md-6">{{ i.name }}</div>
+                            <div class="col-md-6">{{ i.rut }}</div>
+                          </div>
+                        </div>
+                        <div v-if="depto.isEditing">
+                          <button class="btn btn-secondary mt-3">
+                            <svg style="width:18px;height:18px" viewBox="0 0 24 24">
+                              <path fill="#FFFFFF" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
+                            </svg>
+                            <span class="ml-1" @click="authorizedPanel(depto)">Editar lista</span>
+                          </button>
+                        </div>
                       </td>
 
                       <td class="text-right" style="width: 120px;">
@@ -145,8 +157,12 @@
         </div>
       </div>
 
-      <div v-if="addApartmentPanel">
+      <div v-if="panel === 'addapartment'">
         <deptos @back="backPanel($event)" @close="closePanel($event)" />
+      </div>
+
+      <div v-if="panel === 'authorized'">
+
       </div>
 
     </div>
@@ -183,17 +199,11 @@ export default {
     closePanel: function() {
       this.$emit("close", false);
     },
-    newAuth: function() {
-      this.peopleAuthorizedItems.push({
-        name: '',
-        rut: ''
-      })
-    },
-    removeAut: function(aut) {
-      this.peopleAuthorizedItems.splice(aut,1)
-    },
     addNew: function() {
-      this.addApartmentPanel = true;
+      this.panel = "addapartment";
+    },
+    authorizedPanel: function() {
+      this.panel = "authorized";
     },
     backPanel: function() {
       this.addApartmentPanel = false;
