@@ -5,46 +5,61 @@
         <strong class="back" @click="back">
           <svg style="width:18px;height:18px" viewBox="0 0 24 24">
             <path fill="#FFFFFF" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-          </svg> Volver</strong> Editar lista de autorizados</h3>
+          </svg> Volver</strong> Editar lista de autorizados departamento {{ datadepto.number}}</h3>
       <button class="btn btn-link ml-auto" @click="closePanel">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
           <path fill="#FFFFFF" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
         </svg>
       </button>
     </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-8" v-if="selected">
-
-          <div class="row no-gutters mb-1" v-for="aut in selected" :key="aut['.key']">
-            <div class="col-md-6">
+    <div class="card-body p-4">
+      <div class="p-5">
+        <div v-if="selected.length > 0">
+          <div class="row no-gutters list-authorized-header">
+            <div class="col-md-5 p-2">
+              <strong>Nombre</strong>
+            </div>
+            <div class="col-md-5 p-2">
+              <strong>Rut</strong>
+            </div>
+            <div class="col-md-2 p-2 text-right">
+              <strong>Acciones</strong>
+            </div>
+          </div>
+          <div class="row no-gutters list-authorized mb-1" v-for="aut in selected" :key="aut['.key']">
+            <div class="col-md-5 p-2">
               {{ aut.name }}
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 p-2">
               {{ aut.rut }}
             </div>
-            <div class="col-md-1">
-              <button title="Eliminar Usuario" class="btn btn-danger p-1 ml-2" @click="removeAut(aut['.key'])">
-                <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-                  <path fill="#FFFFFF" d="M15,14C17.67,14 23,15.33 23,18V20H7V18C7,15.33 12.33,14 15,14M15,12A4,4 0 0,1 11,8A4,4 0 0,1 15,4A4,4 0 0,1 19,8A4,4 0 0,1 15,12M5,9.59L7.12,7.46L8.54,8.88L6.41,11L8.54,13.12L7.12,14.54L5,12.41L2.88,14.54L1.46,13.12L3.59,11L1.46,8.88L2.88,7.46L5,9.59Z" />
-                </svg>
+            <div class="col-md-2 p-2 text-right">
+              <button title="Eliminar Usuario" class="btn btn-danger btn-sm p-1 ml-2" @click="removeAut(aut['.key'])">
+                ELIMINAR
               </button>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-4">
-              <input type="text" class="form-control" v-model="userNew" placeholder="Nombre">
-            </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control" v-model="rutNew" placeholder="Rut" v-rut>
-            </div>
-            <div class="col-md-4">
-              <button class="btn btn-primary" @click="addNew">Agregar otro</button>
-            </div>
-          </div>
-
         </div>
+        <div v-else>
+          <div class="highlight p-5 text-center">
+            <h5>No hay personas autorizadas aún </h5>
+            <p>ingresa desde el panel de abajo.</p>
+          </div>
+        </div>
+        <h4 class="mt-4">Agregar nueva persona</h4>
+        <div class="row mt-3">
+          <div class="col-md-5">
+            <input type="text" class="form-control" v-model="userNew" placeholder="Nombre">
+          </div>
+          <div class="col-md-5">
+            <input type="text" class="form-control" v-model="rutNew" placeholder="Rut" v-rut>
+          </div>
+          <div class="col-md-2 text-right">
+            <button class="btn btn-primary" @click="addNew">Agregar</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -71,7 +86,7 @@ export default {
   methods: {
     addNew: function() {
       apartmentsRef
-        .child(this.depto[".key"])
+        .child(this.datadepto[".key"])
         .child("authorizedPeople")
         .push({
           name: this.userNew,
@@ -111,5 +126,16 @@ strong.back {
   &:hover {
     background: rgba(0, 0, 0, 0.3);
   }
+}
+
+.list-authorized {
+  background: #f4f4f4;
+  margin-bottom: 2px;
+}
+.btn-danger {
+  font-size: 10px;
+}
+.list-authorized-header {
+  background: #e4eaf1;
 }
 </style>

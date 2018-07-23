@@ -182,7 +182,7 @@ export default {
     authorized
   },
   firebase: {
-    apartments: apartmentsRef.orderByChild("number")
+    apartments: apartmentsRef
   },
   data() {
     return {
