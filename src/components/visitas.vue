@@ -19,9 +19,17 @@
           <input :disabled="!depto" class="form-control form-control-lg" type="text" v-model="name" placeholder="Nombre">
         </div>
         <div class="col-md-3">
-          <label>Rut:</label>
-          <input v-rut:live name="rutname" :disabled="!depto" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
+          <div class="d-flex mb-2">Rut:
+            <div class="form-check ml-auto">
+              <input class="form-check-input" v-model="noRut" :disabled="!depto" type="checkbox" @change="changeRut">
+              <label class="form-check-label" for="defaultCheck1">
+                No desea ingresarlo
+              </label>
+            </div>
+          </div>
+          <input v-rut:live name="rutname" :disabled="!depto || noRut === true" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
           <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
+
         </div>
 
         <div class="col-md-2">
@@ -115,7 +123,12 @@
                       <p class="mb-0 mr-3">
                         <strong>{{ visit.name }} </strong>
                       </p>
-                      <span> {{ visit.rut | rutFilter }}</span>
+                      <span v-if="visit.rut === 'No desea informar'">
+                        No desea informar RUT
+                      </span>
+                      <span v-else>
+                        {{ visit.rut | rutFilter }}
+                      </span>
                       <span class="ml-3" v-if="visit.parking !== ''">
                         <svg style="width:18;height:18px" viewBox="0 0 24 24" class="mr-1">
                           <path fill="#000000" d="M16,6H6L1,12V15H3A3,3 0 0,0 6,18A3,3 0 0,0 9,15H15A3,3 0 0,0 18,18A3,3 0 0,0 21,15H23V12C23,10.89 22.11,10 21,10H19L16,6M6.5,7.5H10.5V10H4.5L6.5,7.5M12,7.5H15.5L17.46,10H12V7.5M6,13.5A1.5,1.5 0 0,1 7.5,15A1.5,1.5 0 0,1 6,16.5A1.5,1.5 0 0,1 4.5,15A1.5,1.5 0 0,1 6,13.5M18,13.5A1.5,1.5 0 0,1 19.5,15A1.5,1.5 0 0,1 18,16.5A1.5,1.5 0 0,1 16.5,15A1.5,1.5 0 0,1 18,13.5Z" />
@@ -161,6 +174,7 @@ export default {
     return {
       name: "",
       rut: "",
+      noRut: false,
       depto: "",
       as: [],
       deptoPanel: "",
@@ -208,6 +222,13 @@ export default {
         text: msg,
         type: typeA
       });
+    },
+    changeRut: function() {
+      if (this.noRut === false) {
+        this.rut = "";
+      } else {
+        this.rut = "No desea informar";
+      }
     },
     addVisit: function() {
       const newdate = new Date().toDateString();

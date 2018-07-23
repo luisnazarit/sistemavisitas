@@ -3,7 +3,7 @@
     <notifications group="foo" position="top center" />
     <div class="is-loged" v-if="login.isLoged">
 
-      <div class="top d-flex align" :class="login.isAdmin ?'is-admin':''">
+      <div class="top d-flex" :class="login.isAdmin ?'is-admin':''">
         Usuario logeado:
         <strong class="ml-1">{{ login.user.email }}</strong>
         <span class="mx-3">|</span>
@@ -32,21 +32,21 @@
       <div class="container">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a href="#" @click="panel = 'addVisit'" class="nav-link" :class="panel === 'addVisit' ? 'active':''">
+            <a href="#" @click.prevent="panel = 'addVisit'" class="nav-link" :class="panel === 'addVisit' ? 'active':''">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="#000000" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
               </svg>
               Ingresar visitas</a>
           </li>
           <li class="nav-item">
-            <a href="#" @click="panel = 'historical'" class="nav-link" :class="panel === 'historical' ? 'active':''">
+            <a href="#" @click.prevent="panel = 'historical'" class="nav-link" :class="panel === 'historical' ? 'active':''">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="#000000" d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3" />
               </svg>
               Historial</a>
           </li>
           <li class="nav-item">
-            <a href="#" @click="panel = 'search'" class="nav-link" :class="panel === 'search' ? 'active':''">
+            <a href="#" @click.prevent="panel = 'search'" class="nav-link" :class="panel === 'search' ? 'active':''">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="#000000" d="M10,13C9.65,13.59 9.36,14.24 9.19,14.93C6.5,15.16 3.9,16.42 3.9,17V18.1H9.2C9.37,18.78 9.65,19.42 10,20H2V17C2,14.34 7.33,13 10,13M10,4A4,4 0 0,1 14,8C14,8.91 13.69,9.75 13.18,10.43C12.32,10.75 11.55,11.26 10.91,11.9L10,12A4,4 0 0,1 6,8A4,4 0 0,1 10,4M10,5.9A2.1,2.1 0 0,0 7.9,8A2.1,2.1 0 0,0 10,10.1A2.1,2.1 0 0,0 12.1,8A2.1,2.1 0 0,0 10,5.9M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14Z" />
               </svg>
