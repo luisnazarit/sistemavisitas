@@ -244,6 +244,7 @@ export default {
   .container {
     background: #fff;
     position: relative;
+    border-radius: 0 0 0.5rem 0.5rem;
   }
 }
 .error-form {

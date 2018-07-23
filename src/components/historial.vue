@@ -141,6 +141,7 @@ export default {
   max-height: 70vh;
   display: flex;
   flex-direction: column;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 .list-historycal {
   flex: 1 1 auto;

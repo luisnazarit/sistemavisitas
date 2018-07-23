@@ -266,6 +266,7 @@ export default {
   border: 0;
   background: #fdfcfc;
   margin: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
   .nav-item {
     margin: 0;
   }
@@ -276,6 +277,7 @@ export default {
     border-radius: 0;
     border-bottom: 2px solid transparent;
     font-size: 1.1rem;
+    background: none;
     path {
       fill: #999;
     }

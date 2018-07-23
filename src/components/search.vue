@@ -1,10 +1,10 @@
 <template>
   <div class="mb-4">
     <div class="container">
-      <div class="p-5 bg-white">
+      <div class="p-5 bg-white shadow search-container">
         <div class="mb-4">
           <input class="form-control form-control-lg" type="text" v-model="search" placeholder="Buscar persona" />
-          <p class="text-muted mt-1">Buscar por nombre a dueño para identificar rápidamente a que departamento pertenece</p>
+          <p class="text-muted mt-1">Buscar por arrendatario para identificar rápidamente el número de departamento</p>
         </div>
         <div v-if="filteredApartments.length !== 0">
           <div class="list-users" v-if="search !== ''">
@@ -53,3 +53,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.search-container {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+</style>
