@@ -25,16 +25,6 @@
 
       </div>
 
-
-<hr />
-<hr />
-
-<authorized />
-
-<hr />
-<hr />
-
-
       <div v-if="deptosIndexPanel">
         <deptosIndex @close="closePanel($event)" @toggle="toggleApartment($event)" />
       </div>

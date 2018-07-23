@@ -162,7 +162,7 @@
       </div>
 
       <div v-if="panel === 'authorized'">
-
+        <authorized @back="backPanel($event)" @close="closePanel($event)" :datadepto="dataDepto" />
       </div>
 
     </div>
@@ -172,12 +172,14 @@
 <script>
 import { db } from "../components/configFirebase";
 import deptos from "../components/deptos";
+import authorized from "../components/authorized";
 let apartmentsRef = db.ref("apartments");
 
 export default {
   name: "deptosIndex",
   components: {
-    deptos
+    deptos,
+    authorized
   },
   firebase: {
     apartments: apartmentsRef
@@ -185,7 +187,8 @@ export default {
   data() {
     return {
       search: "",
-      addApartmentPanel: false
+      panel: "main",
+      dataDepto: ""
     };
   },
   computed: {
@@ -202,11 +205,12 @@ export default {
     addNew: function() {
       this.panel = "addapartment";
     },
-    authorizedPanel: function() {
+    authorizedPanel: function(dep) {
       this.panel = "authorized";
+      this.dataDepto = dep;
     },
     backPanel: function() {
-      this.addApartmentPanel = false;
+      this.panel = "main";
     },
     deleteDepto: function(depto) {
       let opcion = confirm(

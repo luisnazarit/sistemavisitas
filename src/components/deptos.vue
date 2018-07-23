@@ -211,7 +211,7 @@ export default {
       this.$emit("close", false);
     },
     back: function() {
-      this.$emit("back", false);
+      this.$emit("back", "main");
     }
   },
   mounted() {
