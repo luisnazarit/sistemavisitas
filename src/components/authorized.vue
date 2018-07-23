@@ -57,7 +57,11 @@
             <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
           </div>
           <div class="col-md-2 text-right">
-            <button :disabled="rutNew === '' || errors.has('rutname') || userNew === ''" class="btn btn-primary btn-lg" @click="addNew">Agregar</button>
+            <button :disabled="rutNew === '' || errors.has('rutname') || userNew === ''" class="btn btn-primary btn-lg btn-block" @click="addNew">
+              <svg style="width:16px;height:16px" viewBox="0 0 24 24" class="mr-2">
+                <path fill="#FFFFFF" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
+              </svg>
+              Agregar</button>
           </div>
         </div>
 

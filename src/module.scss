@@ -81,12 +81,16 @@ strong {
 }
 .card {
     border: 0;
+    border-radius: .5rem;
     .card-header {
         color: #FFF;
         border: 0;
         background: #3982e4;
         display: flex;
-        align-items: center
+        align-items: center;
+    }
+    .card-header:first-child {
+        border-radius: calc(.5rem - 1px) calc(.5rem - 1px) 0 0
     }
     .card-body {
         overflow: auto;
@@ -131,4 +135,28 @@ strong {
         background: #3982e4;
     }
 
+  }
+
+  .btn {
+      border-radius: 100px;
+  }
+
+  .btn-outline-secondary {
+      border-color: #b2bcc5;
+  }
+
+  .btn-lg {
+      font-size: 15px;
+      height: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+
+  .form-control {
+      border-radius: 50px,
+  }
+
+  .form-control-lg {
+      height: 50px;
+      font-size: 15px;
   }

@@ -52,9 +52,15 @@
                             <strong>{{ depto.number }}</strong>
                           </h6>
                           <p class="mb-1">
-                            <strong>Estacionamiento:</strong> {{ depto.parking }}</p>
+                            <strong>Estacionamiento:</strong>
+                            <span v-if="depto.parking !== ''" class="ml-2">{{ depto.parking }}</span>
+                            <span v-else class="ml-2 text-muted">No posee</span>
+                          </p>
                           <p class="mb-0">
-                            <strong>Bodega:</strong> {{ depto.cellar }}</p>
+                            <strong>Bodega:</strong>
+                            <span v-if="depto.cellar !== ''" class="ml-2">{{ depto.cellar }}</span>
+                            <span v-else class="text-muted ml-2">No posee</span>
+                          </p>
                         </div>
                       </td>
 
@@ -210,7 +216,7 @@ export default {
   computed: {
     filteredApartments: function() {
       return this.apartments.filter(apartment => {
-        return apartment.name.match(this.search);
+        return apartment.lessee.match(this.search);
       });
     }
   },
