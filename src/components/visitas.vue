@@ -29,21 +29,21 @@
           </div>
           <input v-rut:live name="rutname" :disabled="!depto || noRut === true" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rut" placeholder="Rut" v-validate="'rut'">
           <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
-
+          <small v-if="noRut === true" class="d-block text-muted mt-2 error-form" style="width: 350px;">Por normativa, no es obligación registrar el rut de la persona</small>
         </div>
 
         <div class="col-md-2">
           <div class="form-check check-absolute">
             <input class="form-check-input" :disabled="!depto" type="checkbox" v-model="parkingStatus" @change="parking = ''">
             <label class="form-check-label" for="defaultCheck1">
-              ¿ necesita estacionamiento de visitas?
+              ¿ Estacionamiento de visitas?
             </label>
           </div>
           <input :disabled="!depto || !parkingStatus" class="form-control form-control-lg" type="text" :value="parking.toUpperCase()" @input="parking = $event.target.value.toUpperCase()" placeholder="Patente">
         </div>
 
         <div class="col-md-2 d-flex align-items-end">
-          <button :disabled="rut === '' || errors.has('rutname')" class="btn btn-primary btn-lg" @click="addVisit">
+          <button :disabled="name === '' || rut === '' || errors.has('rutname')" class="btn btn-primary btn-lg" @click="addVisit">
             <svg style="width:18px;height:18px" viewBox="0 0 24 24">
               <path fill="#FFFFFF" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
             </svg>
