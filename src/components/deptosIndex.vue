@@ -23,11 +23,11 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 20%;">Informacion depto</th>
+                      <th style="width: 18%;">Informacion depto</th>
                       <th style="width: 23%;">Dueño</th>
                       <th style="width: 23%;">Arrendatario</th>
                       <th>Autorizados</th>
-                      <th style="width: 120px;" class="text-right">Acciones</th>
+                      <th style="width: 180px;" class="text-right">Acciones</th>
                     </tr>
                   </thead>
                 </table>
@@ -38,7 +38,7 @@
                   <tbody>
 
                     <tr v-for="depto in filteredApartments" :key="depto['.key']">
-                      <td style="width: 20%">
+                      <td style="width: 18%">
                         <div v-if="depto.isEditing">
                           <label>Número</label>
                           <input id="numberForm" type="text" class="form-control mb-1" :value="depto.number">
@@ -133,19 +133,27 @@
                           </div>
                         </div>
                         <div v-if="depto.isEditing">
-                          <button class="btn btn-secondary mt-3">
+                          <button class="btn btn-outline-secondary mt-3">
                             <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-                              <path fill="#FFFFFF" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
+                              <path fill="#666666" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
                             </svg>
                             <span class="ml-1" @click="authorizedPanel(depto)">Editar lista</span>
                           </button>
                         </div>
                       </td>
 
-                      <td class="text-right" style="width: 120px;">
+                      <td class="text-right" style="width: 180px;">
                         <div v-if="depto.isEditing">
-                          <button class="btn btn-primary" @click="saveEditing(depto)">Guardar</button>
-                          <button class="ml-1 btn btn-outline-secondary" @click="depto.isEditing = false">Cancelar</button>
+                          <button class="btn btn-primary mb-1" @click="saveEditing(depto)">
+                            <svg style="width:18px;height:18px" viewBox="0 0 24 24" class="mr-1">
+                              <path fill="#FFFFFF" d="M15,5V9H5V19H9.35C8.5,18.27 8,17.19 8,16A4,4 0 0,1 12,12A4,4 0 0,1 16,16C16,17.19 15.5,18.27 14.65,19H19V7.83L16.17,5H15M5,7H13V5H5V7M17,3L21,7V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H17M12,14A2,2 0 0,0 10,16A2,2 0 0,0 12,18A2,2 0 0,0 14,16A2,2 0 0,0 12,14Z" />
+                            </svg>
+                            Guardar</button>
+                          <button class="ml-1 btn btn-outline-secondary" @click="depto.isEditing = false">
+                            <svg style="width:18px;height:18px" viewBox="0 0 24 24">
+                              <path fill="#666666" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L16.91,5.68C15.55,4.63 13.85,4 12,4M12,20A8,8 0 0,0 20,12C20,10.15 19.37,8.45 18.32,7.09L7.09,18.32C8.45,19.37 10.15,20 12,20Z" />
+                            </svg>
+                            Cancelar</button>
                         </div>
                         <div v-else>
                           <div class="dropdown">

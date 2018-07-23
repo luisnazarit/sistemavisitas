@@ -160,3 +160,9 @@ strong {
       height: 50px;
       font-size: 15px;
   }
+
+  .btn-outline-secondary:hover {
+    path {
+        fill: #FFFFFF !important
+    }
+  }
