@@ -69,15 +69,23 @@
                           <label>Fono</label>
                           <input id="phoneForm" type="text" class="form-control mb-0" :value="depto.phone">
                         </div>
-                        <div v-else>
+                        <div v-else class="info-table">
                           <p class="mb-1">
-                            <strong>Nombre:</strong> {{ depto.name }}</p>
+                            <strong>Nombre:</strong>
+                            <span>{{ depto.name }}</span>
+                          </p>
                           <p class="mb-1">
-                            <strong>Rut:</strong> {{ depto.rut }}</p>
+                            <strong>Rut:</strong>
+                            <span>{{ depto.rut }}</span>
+                          </p>
                           <p class="mb-0">
-                            <strong>Email:</strong> {{ depto.email }}</p>
+                            <strong>Email:</strong>
+                            <span>{{ depto.email }}</span>
+                          </p>
                           <p class="mb-0">
-                            <strong>Fono:</strong> {{ depto.phone }}</p>
+                            <strong>Fono:</strong>
+                            <span>{{ depto.phone }}</span>
+                          </p>
                         </div>
                       </td>
 
@@ -92,15 +100,23 @@
                           <label>Fono</label>
                           <input id="lesseePhoneForm" type="text" class="form-control mb-0" :value="depto.lesseePhone">
                         </div>
-                        <div v-else>
+                        <div v-else class="info-table">
                           <p class="mb-1">
-                            <strong>Nombre:</strong> {{ depto.lessee }}</p>
+                            <strong>Nombre:</strong>
+                            <span>{{ depto.lessee }}</span>
+                          </p>
                           <p class="mb-1">
-                            <strong>Rut:</strong> {{ depto.lesseeRut }}</p>
+                            <strong>Rut:</strong>
+                            <span>{{ depto.lesseeRut }}</span>
+                          </p>
                           <p class="mb-0">
-                            <strong>Email:</strong> {{ depto.lesseeEmail }}</p>
+                            <strong>Email:</strong>
+                            <span>{{ depto.lesseeEmail }}</span>
+                          </p>
                           <p class="mb-0">
-                            <strong>Fono:</strong> {{ depto.lesseePhone }}</p>
+                            <strong>Fono:</strong>
+                            <span>{{ depto.lesseePhone }}</span>
+                          </p>
                         </div>
                       </td>
                       <td class="width: 23%">
@@ -296,6 +312,17 @@ export default {
     td {
       border-top: 0;
     }
+  }
+}
+
+.info-table > p {
+  display: flex;
+  strong {
+    text-align: right;
+    width: 60px;
+  }
+  span {
+    margin-left: 1rem;
   }
 }
 

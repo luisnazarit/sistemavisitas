@@ -50,13 +50,14 @@
         <h4 class="mt-4">Agregar nueva persona</h4>
         <div class="row mt-3">
           <div class="col-md-5">
-            <input type="text" class="form-control" v-model="userNew" placeholder="Nombre">
+            <input type="text" class="form-control form-control-lg" v-model="userNew" placeholder="Nombre">
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" v-model="rutNew" placeholder="Rut" v-rut>
+            <input v-rut:live name="rutname" :class="errors.has('rutname') ? 'error' : ''" class="form-control form-control-lg" type="text" v-model="rutNew" placeholder="Rut" v-validate="'rut'">
+            <small class="text-danger error-form" v-show="errors.has('rutname')">Rut inválido</small>
           </div>
           <div class="col-md-2 text-right">
-            <button class="btn btn-primary" @click="addNew">Agregar</button>
+            <button :disabled="rutNew === '' || errors.has('rutname') || userNew === ''" class="btn btn-primary btn-lg" @click="addNew">Agregar</button>
           </div>
         </div>
 
